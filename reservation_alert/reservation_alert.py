@@ -5,6 +5,8 @@ import requests
 
 from send_alert import send_email
 
+NO_BOOKABLE_MONTH_MESSAGE = 'No bookable month was found! :-('
+
 
 def get_data_from_api(api_endpoint):
     response = requests.get(api_endpoint)
@@ -22,20 +24,29 @@ def is_bookable_date(json_array):
     return False
 
 
-if __name__ == '__main__':
-    for month_number in range(1, 2):
+def find_month_with_bookable_date():
+    for month_number in range(1, 13):
         api_endpoint = f"https://widget-api.formitable.com/api/availability/bb6b9cdd/monthWeeks/{month_number}/2023/2/nl"
         data = get_data_from_api(api_endpoint)
 
         month_name = calendar.month_name[month_number]
 
-        message = f"In {month_name} there is {'a' if is_bookable_date(data) else 'no'} bookable date"
-        print(message)
+        if (is_bookable_date(data)):
+            message = f"In {month_name} there is {'a' if is_month_with_bookable_date else 'no'} bookable date"
+            print(message)
+            return message
 
+    return NO_BOOKABLE_MONTH_MESSAGE
+
+
+if __name__ == '__main__':
+    message = find_month_with_bookable_date()
+
+    if message is not NO_BOOKABLE_MONTH_MESSAGE:
         gmail_user = os.environ.get('GMAIL_USER')
         gmail_password = os.environ.get('GMAIL_PASSWORD')
         to = os.environ.get('MAIL_RECIPIENT')
         subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
-        body = f"{message}! https://denieuwewinkel.com/"
+        body = f"{message} https://denieuwewinkel.com/"
 
         send_email(gmail_user, gmail_password, to, subject, body)

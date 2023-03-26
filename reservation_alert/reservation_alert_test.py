@@ -1,6 +1,6 @@
 import unittest
 
-from reservation_alert import get_data_from_api, is_bookable_date
+from reservation_alert import get_data_from_api, is_bookable_date, find_month_with_bookable_date
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -40,6 +40,9 @@ class TestGetDataFromAPI(unittest.TestCase):
 
         result = is_bookable_date(reservation_days)
         self.assertEqual(result, False)
+
+    def test_find_month_with_bookable_date(self):
+        self.assertEqual('No bookable month was found! :-(', find_month_with_bookable_date())
 
 
 if __name__ == '__main__':
