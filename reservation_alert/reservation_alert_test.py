@@ -1,6 +1,6 @@
 import unittest
 
-from src.reservation_alert import get_data_from_api, is_bookable_date
+from reservation_alert import get_data_from_api, is_bookable_date
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestGetDataFromAPI(unittest.TestCase):
             },
             {
                 "date": "2023-08-28T22:00:00Z",
-                "status": 2,
+                "status": 3,
             },
         ]
 

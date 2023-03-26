@@ -1,6 +1,9 @@
 import calendar
+import os
 
 import requests
+
+from send_alert import send_email
 
 
 def get_data_from_api(api_endpoint):
@@ -20,9 +23,19 @@ def is_bookable_date(json_array):
 
 
 if __name__ == '__main__':
-    for month_number in range(1, 13):
+    for month_number in range(1, 2):
         api_endpoint = f"https://widget-api.formitable.com/api/availability/bb6b9cdd/monthWeeks/{month_number}/2023/2/nl"
         data = get_data_from_api(api_endpoint)
 
         month_name = calendar.month_name[month_number]
-        print(f"In {month_name} there is {'a' if is_bookable_date(data) else 'no'} bookable date")
+
+        message = f"In {month_name} there is {'a' if is_bookable_date(data) else 'no'} bookable date"
+        print(message)
+
+        gmail_user = os.environ.get('GMAIL_USER')
+        gmail_password = os.environ.get('GMAIL_PASSWORD')
+        to = os.environ.get('MAIL_RECIPIENT')
+        subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
+        body = f"{message}! https://denieuwewinkel.com/"
+
+        send_email(gmail_user, gmail_password, to, subject, body)
