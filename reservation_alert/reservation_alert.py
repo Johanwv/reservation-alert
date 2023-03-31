@@ -45,14 +45,19 @@ def should_message_be_send(bookable_month_message):
     return False
 
 
+def email_addresses():
+    return os.environ.get('MAIL_RECIPIENTS').split(',')
+
+
 if __name__ == '__main__':
     message = find_month_with_bookable_date()
 
     if should_message_be_send(message):
-        gmail_user = os.environ.get('GMAIL_USER')
-        gmail_password = os.environ.get('GMAIL_PASSWORD')
-        to = os.environ.get('MAIL_RECIPIENT')
-        subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
-        body = f"{message} https://denieuwewinkel.com/"
+        for email_address in email_addresses():
+            gmail_user = os.environ.get('GMAIL_USER')
+            gmail_password = os.environ.get('GMAIL_PASSWORD')
+            to = email_address
+            subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
+            body = f"{message} https://denieuwewinkel.com/"
 
-        send_email(gmail_user, gmail_password, to, subject, body)
+            send_email(gmail_user, gmail_password, to, subject, body)

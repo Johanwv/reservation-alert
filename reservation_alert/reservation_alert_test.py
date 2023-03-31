@@ -2,7 +2,7 @@ import os
 import unittest
 
 from reservation_alert import NO_BOOKABLE_MONTH_MESSAGE, get_data_from_api, is_bookable_date, \
-    find_month_with_bookable_date, should_message_be_send
+    find_month_with_bookable_date, should_message_be_send, email_addresses
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -50,6 +50,11 @@ class TestGetDataFromAPI(unittest.TestCase):
         os.environ["ALWAYS_SEND_EMAIL"] = "true"
 
         self.assertTrue(should_message_be_send(NO_BOOKABLE_MONTH_MESSAGE))
+
+    def test_when_multiple_email_addresses_are_passed_then_they_are_returned_by_get_email_addresses(self):
+        os.environ["MAIL_RECIPIENTS"] = "test1@mail.com,test2@mail.com"
+
+        self.assertEqual(["test1@mail.com", "test2@mail.com"], email_addresses())
 
 
 if __name__ == '__main__':
