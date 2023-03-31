@@ -39,14 +39,18 @@ def find_month_with_bookable_date():
     return NO_BOOKABLE_MONTH_MESSAGE
 
 
-if __name__ == '__main__':
-    message = find_month_with_bookable_date()
-
-    if message is not NO_BOOKABLE_MONTH_MESSAGE:
+def send_email_if_necessary(bookable_month_message):
+    if bookable_month_message is not NO_BOOKABLE_MONTH_MESSAGE or os.environ.get('ALWAYS_SEND_EMAIL') == 'true':
         gmail_user = os.environ.get('GMAIL_USER')
         gmail_password = os.environ.get('GMAIL_PASSWORD')
         to = os.environ.get('MAIL_RECIPIENT')
         subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
-        body = f"{message} https://denieuwewinkel.com/"
+        body = f"{bookable_month_message} https://denieuwewinkel.com/"
 
         send_email(gmail_user, gmail_password, to, subject, body)
+
+
+if __name__ == '__main__':
+    message = find_month_with_bookable_date()
+
+    send_email_if_necessary(message)
