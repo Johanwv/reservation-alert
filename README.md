@@ -1,4 +1,4 @@
-![Reservation alert]https://github.com/Johanwv/reservation-alert/actions/workflows/build.yaml/badge.svg
+![Reservation alert](https://github.com/Johanwv/reservation-alert/actions/workflows/build.yaml/badge.svg)
 
 Instructions
 ========================================
