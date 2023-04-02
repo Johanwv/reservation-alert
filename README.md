@@ -1,3 +1,5 @@
+https://github.com/Johanwv/reservation-alert/actions/workflows/build.yaml/badge.svg
+
 Instructions
 ========================================
 
