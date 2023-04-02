@@ -27,4 +27,4 @@ jobs:
           config: .pre-commit-config.yaml
 
       - name: Run tests
-        run: python -m unittest discover -s tests
+        run: python -m unittest discover -s reservation_alert

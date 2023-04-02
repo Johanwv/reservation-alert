@@ -2,7 +2,7 @@
 import os
 import unittest
 
-from reservation_alert import NO_BOOKABLE_MONTH_MESSAGE, get_data_from_api, is_bookable_date, \
+from reservation_alert import get_data_from_api, is_bookable_date, NO_BOOKABLE_MONTH_MESSAGE, \
     find_month_with_bookable_date, should_message_be_send, email_addresses
 
 
