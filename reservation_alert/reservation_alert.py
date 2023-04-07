@@ -50,9 +50,8 @@ def email_addresses():
     return os.environ.get('MAIL_RECIPIENTS').split(',')
 
 
-if __name__ == '__main__':
+def main():
     message = find_month_with_bookable_date()
-
     if should_message_be_send(message):
         for email_address in email_addresses():
             gmail_user = os.environ.get('GMAIL_USER')
@@ -62,3 +61,9 @@ if __name__ == '__main__':
             body = f"{message} https://denieuwewinkel.com/"
 
             send_email(gmail_user, gmail_password, to, subject, body)
+
+    return True
+
+
+if __name__ == '__main__':
+    main()

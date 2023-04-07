@@ -3,7 +3,7 @@ import os
 import unittest
 
 from reservation_alert import get_data_from_api, is_bookable_date, NO_BOOKABLE_MONTH_MESSAGE, \
-    find_month_with_bookable_date, should_message_be_send, email_addresses
+    find_month_with_bookable_date, should_message_be_send, email_addresses, main
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -47,6 +47,9 @@ class TestGetDataFromAPI(unittest.TestCase):
     def test_find_month_with_bookable_date(self):
         self.assertEqual(NO_BOOKABLE_MONTH_MESSAGE, find_month_with_bookable_date())
 
+    def test_when_message_is_no_bookable_month_then_no_email_should_send(self):
+        self.assertTrue(should_message_be_send(NO_BOOKABLE_MONTH_MESSAGE))
+
     def test_when_always_send_email_is_true_then_email_should_send(self):
         os.environ["ALWAYS_SEND_EMAIL"] = "true"
 
@@ -56,6 +59,9 @@ class TestGetDataFromAPI(unittest.TestCase):
         os.environ["MAIL_RECIPIENTS"] = "test1@mail.com,test2@mail.com"
 
         self.assertEqual(["test1@mail.com", "test2@mail.com"], email_addresses())
+
+    def test_main(self):
+        self.assertTrue(main())
 
 
 if __name__ == '__main__':
