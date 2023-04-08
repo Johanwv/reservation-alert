@@ -1,6 +1,5 @@
 ![Reservation alert](https://github.com/Johanwv/reservation-alert/actions/workflows/build.yaml/badge.svg)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
-![Coverage](coverage.svg)
 
 Instructions
 ========================================
