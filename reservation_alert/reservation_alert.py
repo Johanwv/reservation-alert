@@ -61,6 +61,8 @@ def main():
             body = f"{message} https://denieuwewinkel.com/"
 
             send_email(gmail_user, gmail_password, to, subject, body)
+    else:
+        print('No email was sent')
 
     return True
 
