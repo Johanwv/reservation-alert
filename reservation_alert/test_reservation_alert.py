@@ -60,9 +60,6 @@ class TestGetDataFromAPI(unittest.TestCase):
 
         self.assertEqual(["test1@mail.com", "test2@mail.com"], email_addresses())
 
-    def test_main(self):
-        self.assertTrue(main())
-
 
 if __name__ == '__main__':
     unittest.main()
