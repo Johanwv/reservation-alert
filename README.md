@@ -20,6 +20,8 @@ docker run -e GMAIL_USER=gmailuser@gmail.com -e GMAIL_PASSWORD=password -e MAIL_
 
 Optionally you can also pass `ALWAYS_SEND_EMAIL=true` to test that an email is actually send
 
+`INTEVERAL=60` is the interval in seconds between each check for available slots. Default is 300 sec.
+
 ```bash
 docker run -e GMAIL_USER=gmailuser@gmail.com -e GMAIL_PASSWORD=password -e MAIL_RECIPIENTS=recipient@gmail.com -e ALWAYS_SEND_EMAIL=true alert-reservation
 ```

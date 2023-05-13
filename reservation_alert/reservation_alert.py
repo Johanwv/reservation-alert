@@ -27,13 +27,13 @@ def is_bookable_date(json_array):
 
 
 def find_month_with_bookable_date():
-    for month_number in range(1, 13):
+    for month_number in range(8, 13):
         api_endpoint = f"https://widget-api.formitable.com/api/availability/bb6b9cdd/monthWeeks/{month_number}/2023/2/nl"
         data = get_data_from_api(api_endpoint)
 
         month_name = calendar.month_name[month_number]
 
-        if (is_bookable_date(data)):
+        if is_bookable_date(data):
             message = f"In {month_name} there is a bookable date"
             print(message)
             return message
@@ -78,4 +78,6 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    seconds = int(os.environ.get('INTERVAL')) if os.environ.get('INTERVAL') is not None else 300
+    print(f"Interval is {seconds} seconds")
+    call_function_every_x_seconds(main, seconds)
