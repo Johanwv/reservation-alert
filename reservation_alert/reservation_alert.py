@@ -51,26 +51,47 @@ def email_addresses():
     return os.environ.get('MAIL_RECIPIENTS').split(',')
 
 
-def call_function_every_x_seconds(func, seconds):
+def is_one_day(seconds_passed):
+    seconds_in_a_day = 60 * 60 * 24
+    return seconds_passed > seconds_in_a_day
+
+
+def call_function_every_x_seconds(func, seconds_to_wait):
     number_of_notifications = 0
+    counter = 0
 
     while True and number_of_notifications < 10:
         if func():
             number_of_notifications += 1
-        time.sleep(seconds)  # Delay for x seconds before the next function call
+        if is_one_day(seconds_to_wait * counter):
+            message = find_month_with_bookable_date()
+            send_email(gmail_user(), gmail_password(), email_addresses()[0], 'Health check', get_body(message))
+            counter = 0
+        time.sleep(seconds_to_wait)  # Delay for x seconds before the next function call
+        counter += 1
+
+
+def gmail_password():
+    return os.environ.get('GMAIL_PASSWORD')
+
+
+def gmail_user():
+    return os.environ.get('GMAIL_USER')
+
+
+def get_body(message):
+    return f"{message} https://denieuwewinkel.com/"
 
 
 def main():
     message = find_month_with_bookable_date()
     if should_message_be_send(message):
         for email_address in email_addresses():
-            gmail_user = os.environ.get('GMAIL_USER')
-            gmail_password = os.environ.get('GMAIL_PASSWORD')
             to = email_address
             subject = 'Mogelijk plekken beschikbaar bij de nieuwe winkel!'
-            body = f"{message} https://denieuwewinkel.com/"
+            body = get_body(message)
 
-            send_email(gmail_user, gmail_password, to, subject, body)
+            send_email(gmail_user(), gmail_password(), to, subject, body)
     else:
         print('No email was sent')
 

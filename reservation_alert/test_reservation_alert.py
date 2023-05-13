@@ -3,7 +3,8 @@ import os
 import unittest
 
 from reservation_alert import get_data_from_api, is_bookable_date, NO_BOOKABLE_MONTH_MESSAGE, \
-    find_month_with_bookable_date, should_message_be_send, email_addresses, call_function_every_x_seconds
+    find_month_with_bookable_date, should_message_be_send, email_addresses, call_function_every_x_seconds, \
+    is_one_day
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -71,6 +72,14 @@ class TestGetDataFromAPI(unittest.TestCase):
         call_function_every_x_seconds(increment_counter, 0.01)
 
         self.assertEqual(counter, 10)
+
+    def test_when_more_than_one_day_has_passed_return_true(self):
+        total_seconds = 60 * 60 * 24 + 1
+        self.assertTrue(is_one_day(total_seconds))
+
+    def test_when_less_than_one_day_has_passed_return_false(self):
+        total_seconds = 60 * 60
+        self.assertFalse(is_one_day(total_seconds))
 
 
 if __name__ == '__main__':
