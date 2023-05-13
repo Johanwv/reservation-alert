@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
+import logging
 import smtplib
 from email.mime.text import MIMEText
+
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger()
 
 
 def send_email(gmail_user, gmail_password, to, subject, body):
@@ -26,4 +31,4 @@ def send_email(gmail_user, gmail_password, to, subject, body):
         server.login(gmail_user, gmail_password)
         server.sendmail(gmail_user, to, msg.as_string())
 
-    print('Email sent successfully')
+    logger.info('Email sent successfully')

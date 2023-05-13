@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import calendar
+import logging
 import os
 import time
 
@@ -8,6 +9,8 @@ import requests
 from send_alert import send_email
 
 NO_BOOKABLE_MONTH_MESSAGE = 'No bookable month was found! :-('
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger()
 
 
 def get_data_from_api(api_endpoint):
@@ -35,7 +38,7 @@ def find_month_with_bookable_date():
 
         if is_bookable_date(data):
             message = f"In {month_name} there is a bookable date"
-            print(message)
+            logger.info(message)
             return message
 
     return NO_BOOKABLE_MONTH_MESSAGE
@@ -93,12 +96,12 @@ def main():
 
             send_email(gmail_user(), gmail_password(), to, subject, body)
     else:
-        print('No email was sent')
+        logger.info('No email was sent')
 
     return True
 
 
 if __name__ == '__main__':
     seconds = int(os.environ.get('INTERVAL')) if os.environ.get('INTERVAL') is not None else 300
-    print(f"Interval is {seconds} seconds")
+    logger.info(f"Interval is {seconds} seconds")
     call_function_every_x_seconds(main, seconds)
