@@ -3,7 +3,7 @@ import os
 import unittest
 
 from reservation_alert import get_data_from_api, is_bookable_date, NO_BOOKABLE_MONTH_MESSAGE, \
-    find_month_with_bookable_date, should_message_be_send, email_addresses, main
+    find_month_with_bookable_date, should_message_be_send, email_addresses, call_function_every_x_seconds
 
 
 class TestGetDataFromAPI(unittest.TestCase):
@@ -59,6 +59,18 @@ class TestGetDataFromAPI(unittest.TestCase):
         os.environ["MAIL_RECIPIENTS"] = "test1@mail.com,test2@mail.com"
 
         self.assertEqual(["test1@mail.com", "test2@mail.com"], email_addresses())
+
+    def test_when_time_is_one_hundredth_of_a_second_then_function_is_called_ten_times(self):
+        counter = 0
+
+        def increment_counter():
+            nonlocal counter
+            counter += 1
+            return True
+
+        call_function_every_x_seconds(increment_counter, 0.01)
+
+        self.assertEqual(counter, 10)
 
 
 if __name__ == '__main__':

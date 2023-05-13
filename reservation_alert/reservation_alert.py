@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import calendar
 import os
+import time
 
 import requests
 
@@ -48,6 +49,15 @@ def should_message_be_send(bookable_month_message):
 
 def email_addresses():
     return os.environ.get('MAIL_RECIPIENTS').split(',')
+
+
+def call_function_every_x_seconds(func, seconds):
+    number_of_notifications = 0
+
+    while True and number_of_notifications < 10:
+        if func():
+            number_of_notifications += 1
+        time.sleep(seconds)  # Delay for x seconds before the next function call
 
 
 def main():
