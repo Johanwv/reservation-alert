@@ -5,7 +5,7 @@ name: Publish Docker image
 on:
   push:
     tags:
-      - 'publish'  # Trigger pipeline on tags starting with 'v'
+      - 'publish'
 
 jobs:
   push_to_registry:
